@@ -1,6 +1,6 @@
 # gh-release
 
-Bash script for creating and uploading files to GitHub Releases.
+Tool for creating and uploading files to GitHub Releases.
 
 ## License
 
