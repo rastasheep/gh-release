@@ -49,7 +49,7 @@ changelog:
 	@echo "Done, check ./release"
 
 test:
-	go test -r -cover
+	go test ./... -cover
 
 clean:
 	@echo Cleaning Workspace...
