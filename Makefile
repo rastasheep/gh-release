@@ -48,13 +48,16 @@ changelog:
 	@echo "\n" >> CHANGELOG.md;
 	@echo "Done, check ./release"
 
+setup: clean
+	go get -d -v ./...
+
 test:
 	go test ./... -cover
 
 clean:
 	@echo Cleaning Workspace...
-	rm -dRf bin
-	rm -dRf release
+	@rm -dRf bin
+	@rm -dRf release
 
 info:
 	@printf "%-9s %-8s \n" "Name:" $(NAME)
