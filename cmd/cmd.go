@@ -12,6 +12,7 @@ type Cmd struct {
 	Slug        string
 	Version     string
 	ReleasePath string
+	Token       string
 }
 
 func Create(c *cli.Context) (*Cmd, error) {
@@ -26,5 +27,6 @@ func Create(c *cli.Context) (*Cmd, error) {
 		Slug:        args.First(),
 		Version:     args.Get(1),
 		ReleasePath: c.String("release_path"),
+		Token:       c.GlobalString("token"),
 	}, nil
 }

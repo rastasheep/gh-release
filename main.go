@@ -13,6 +13,14 @@ var Commands = []cli.Command{
 	cmdDestroy,
 }
 
+var Flags = []cli.Flag{
+	cli.StringFlag{
+		Name:   "token, t",
+		Usage:  "github token",
+		EnvVar: "GITHUB_TOKEN",
+	},
+}
+
 var cmdCreate = cli.Command{
 	Name:      "create",
 	ShortName: "c",
@@ -38,12 +46,13 @@ func main() {
 
 	app.Name = "gh-release"
 	app.Version = version
-	app.Author = "Aleksandar Diklic"
+	app.Author = "Aleksandar Diklic - https://github.com/rastasheep"
 	app.Email = "rastasheep@gmail.com"
 
 	app.Usage = "fight the loneliness!"
 	app.Action = cli.ShowAppHelp
 	app.Commands = Commands
+	app.Flags = Flags
 
 	app.Run(os.Args)
 }

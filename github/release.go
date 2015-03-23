@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/octokit/go-octokit/octokit"
 )
 
 type Release struct {
@@ -12,9 +14,11 @@ type Release struct {
 	Path       string
 	Files      []string
 	Version    string
+	Release    *octokit.Release
+	Token      string
 }
 
-func CreateRelease(slug string, version string, path string) (*Release, error) {
+func CreateRelease(slug, version, path, token string) (*Release, error) {
 	repo, err := CreateRepository(slug)
 	if err != nil {
 		return nil, err
@@ -30,10 +34,22 @@ func CreateRelease(slug string, version string, path string) (*Release, error) {
 		Files:      files,
 		Path:       path,
 		Version:    version,
+		Token:      token,
 	}, nil
 }
 
 func (r *Release) Deploy() error {
+	client := NewClient(r.Token)
+	release, err := client.CreateRelease(r)
+	if err != nil {
+		//TODO: show command before error: cli.ShowCommandHelp(c.Context, c.Name)
+		println("ERROR:\n   ", err.Error())
+		os.Exit(1)
+	}
+
+	NewAssetUploader(client, release)
+	//uploader.UploadAll(paths)
+
 	return nil
 }
 

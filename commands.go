@@ -12,7 +12,7 @@ func Create(c *cli.Context) {
 	cmd, err := cmd.Create(c)
 	FatalIf(cmd, err)
 
-	release, err := github.CreateRelease(cmd.Slug, cmd.Version, cmd.ReleasePath)
+	release, err := github.CreateRelease(cmd.Slug, cmd.Version, cmd.ReleasePath, cmd.Token)
 	FatalIf(cmd, err)
 
 	err = release.Deploy()
@@ -27,7 +27,7 @@ func Destroy(c *cli.Context) {
 
 func FatalIf(c *cmd.Cmd, err error) {
 	if err != nil {
-		//TODO: show command before error: cli.ShowCommandHelp(c.Context, c.Name)
+		cli.ShowCommandHelp(c.Context, c.Name)
 		println("ERROR:\n   ", err.Error())
 		os.Exit(1)
 	}
