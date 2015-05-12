@@ -27,7 +27,10 @@ func Destroy(c *cli.Context) {
 
 func FatalIf(c *cmd.Cmd, err error) {
 	if err != nil {
-		cli.ShowCommandHelp(c.Context, c.Name)
+		if c != nil {
+			cli.ShowCommandHelp(c.Context, c.Name)
+		}
+		
 		println("ERROR:\n   ", err.Error())
 		os.Exit(1)
 	}
