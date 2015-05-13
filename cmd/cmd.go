@@ -16,9 +16,11 @@ type Cmd struct {
 }
 
 func Create(c *cli.Context) (*Cmd, error) {
+	var err error
 	args := c.Args()
+
 	if len(args) < 2 {
-		return nil, errors.New("You must provide repository name and release version.")
+		err = errors.New("You must provide repository name and release version.")
 	}
 
 	return &Cmd{
@@ -28,5 +30,5 @@ func Create(c *cli.Context) (*Cmd, error) {
 		Version:     args.Get(1),
 		ReleasePath: c.String("release_path"),
 		Token:       c.GlobalString("token"),
-	}, nil
+	}, err
 }
